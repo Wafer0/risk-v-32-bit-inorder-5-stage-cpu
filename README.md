@@ -476,10 +476,6 @@ ls test/programs/*.hex
 
 ---
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
 - RISC-V International for the ISA specification
@@ -489,8 +485,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## Status
+## License
 
-Design Status: Complete  
-Verification: All tests passing  
-GDSII: Generated and ready for fabrication
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
