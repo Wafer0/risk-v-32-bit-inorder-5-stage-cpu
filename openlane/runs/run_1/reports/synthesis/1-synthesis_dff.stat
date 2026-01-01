@@ -1,0 +1,25 @@
+
+62. Printing statistics.
+
+=== riscv_cpu ===
+
+   Number of wires:               7375
+   Number of wire bits:           9101
+   Number of public wires:          91
+   Number of public wire bits:    1754
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               8994
+     $_ANDNOT_                     870
+     $_AND_                         55
+     $_MUX_                       5161
+     $_NAND_                        78
+     $_NOR_                        202
+     $_NOT_                        148
+     $_ORNOT_                       89
+     $_OR_                         603
+     $_XNOR_                        97
+     $_XOR_                        211
+     sky130_fd_sc_hd__dfxtp_2     1480
+

@@ -1,0 +1,3 @@
+STATS: Cycles: 9
+STATS: Instructions: 3
+STATS: IPC: 0.3333

@@ -1,0 +1,14 @@
+%Warning-UNUSEDSIGNAL: ../rtl/alu.sv:7:25: Bits of signal are not used: 'funct7'[6,4:0]
+                                         : ... In instance riscv_cpu.alu_unit
+    7 |     input  logic [6:0]  funct7,
+      |                         ^~~~~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.009
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+%Warning-UNUSEDSIGNAL: ../rtl/control_unit.sv:5:25: Signal is not used: 'funct7'
+                                                  : ... In instance riscv_cpu.ctrl
+    5 |     input  logic [6:0]  funct7,
+      |                         ^~~~~~
+%Warning-UNUSEDSIGNAL: ../rtl/branch_control.sv:6:25: Bits of signal are not used: 'alu_result'[30:0]
+                                                    : ... In instance riscv_cpu.brctrl
+    6 |     input  logic [31:0] alu_result,
+      |                         ^~~~~~~~~~

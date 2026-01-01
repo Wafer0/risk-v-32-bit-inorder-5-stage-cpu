@@ -1,0 +1,9 @@
+// Jump operations test program
+// jal x1, label
+// addi x2, x0, 1
+// label: addi x3, x0, 2
+00000000
+00000000
+00000193
+00000213
+

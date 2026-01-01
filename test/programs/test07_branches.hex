@@ -1,0 +1,12 @@
+// Branch operations test program
+// addi x1, x0, 10
+// addi x2, x0, 10
+// beq x1, x2, label
+// addi x3, x0, 1
+// label: addi x4, x0, 2
+0000000a
+00000014
+00208263
+00000193
+00000213
+

@@ -1,0 +1,3293 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2025  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.54 (git sha1 db72ec3bd, g++ 15.2.1 -march=x86-64 -mtune=generic -O2 -fno-plt -fexceptions -fstack-clash-protection -fcf-protection -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/yosys/src=/usr/src/debug/yosys -fPIC -O3)
+
+-- Running command `read_verilog syn/riscv_cpu_flat.v;           hierarchy -check -top riscv_cpu;           proc; opt; fsm; opt; memory; opt;           synth -top riscv_cpu;           write_verilog syn/riscv_cpu_synth.v;           stat' --
+
+1. Executing Verilog-2005 frontend: syn/riscv_cpu_flat.v
+Parsing Verilog input from `syn/riscv_cpu_flat.v' to AST representation.
+Generating RTLIL representation for module `\pc'.
+Generating RTLIL representation for module `\instruction_memory'.
+Generating RTLIL representation for module `\register_file'.
+Generating RTLIL representation for module `\control_unit'.
+Generating RTLIL representation for module `\immediate_generator'.
+Generating RTLIL representation for module `\alu'.
+Generating RTLIL representation for module `\data_memory'.
+Generating RTLIL representation for module `\branch_control'.
+Generating RTLIL representation for module `\hazard_detection'.
+Generating RTLIL representation for module `\riscv_cpu'.
+Successfully finished Verilog frontend.
+
+2. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1. Analyzing design hierarchy..
+Top module:  \riscv_cpu
+Used module:     \branch_control
+Used module:     \alu
+Used module:     \immediate_generator
+Used module:     \control_unit
+Used module:     \register_file
+Used module:     \hazard_detection
+
+2.2. Analyzing design hierarchy..
+Top module:  \riscv_cpu
+Used module:     \branch_control
+Used module:     \alu
+Used module:     \immediate_generator
+Used module:     \control_unit
+Used module:     \register_file
+Used module:     \hazard_detection
+Removing unused module `\data_memory'.
+Removing unused module `\instruction_memory'.
+Removing unused module `\pc'.
+Removed 3 unused modules.
+
+3. Executing PROC pass (convert processes to netlists).
+
+3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 1 empty switch in `\alu.$proc$syn/riscv_cpu_flat.v:241$514'.
+Found and cleaned up 1 empty switch in `\alu.$proc$syn/riscv_cpu_flat.v:219$511'.
+Found and cleaned up 1 empty switch in `\immediate_generator.$proc$syn/riscv_cpu_flat.v:184$508'.
+Found and cleaned up 1 empty switch in `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+Found and cleaned up 1 empty switch in `\branch_control.$proc$syn/riscv_cpu_flat.v:320$2135'.
+Cleaned up 5 empty switches.
+
+3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$syn/riscv_cpu_flat.v:611$2204 in module riscv_cpu.
+Marked 1 switch rules as full_case in process $proc$syn/riscv_cpu_flat.v:587$2199 in module riscv_cpu.
+Marked 1 switch rules as full_case in process $proc$syn/riscv_cpu_flat.v:542$2186 in module riscv_cpu.
+Marked 1 switch rules as full_case in process $proc$syn/riscv_cpu_flat.v:496$2185 in module riscv_cpu.
+Marked 1 switch rules as full_case in process $proc$syn/riscv_cpu_flat.v:487$2180 in module riscv_cpu.
+Marked 1 switch rules as full_case in process $proc$syn/riscv_cpu_flat.v:241$514 in module alu.
+Removed 2 dead cases from process $proc$syn/riscv_cpu_flat.v:219$511 in module alu.
+Marked 2 switch rules as full_case in process $proc$syn/riscv_cpu_flat.v:219$511 in module alu.
+Removed 1 dead cases from process $proc$syn/riscv_cpu_flat.v:184$508 in module immediate_generator.
+Marked 2 switch rules as full_case in process $proc$syn/riscv_cpu_flat.v:184$508 in module immediate_generator.
+Marked 3 switch rules as full_case in process $proc$syn/riscv_cpu_flat.v:97$506 in module control_unit.
+Marked 2 switch rules as full_case in process $proc$syn/riscv_cpu_flat.v:59$430 in module register_file.
+Marked 1 switch rules as full_case in process $proc$syn/riscv_cpu_flat.v:320$2135 in module branch_control.
+Removed a total of 3 dead cases.
+
+3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 34 redundant assignments.
+Promoted 55 assignments to connections.
+
+3.4. Executing PROC_INIT pass (extract init attributes).
+
+3.5. Executing PROC_ARST pass (detect async resets in processes).
+
+3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~18 debug messages>
+
+3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:611$2204'.
+     1/7: $0\mem_to_reg_wb[0:0]
+     2/7: $0\jump_wb[0:0]
+     3/7: $0\reg_write_wb[0:0]
+     4/7: $0\rd_wb[4:0]
+     5/7: $0\mem_data_wb[31:0]
+     6/7: $0\alu_out_wb[31:0]
+     7/7: $0\pc_plus_4_wb[31:0]
+Creating decoders for process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+     1/10: $0\mem_write_mem[0:0]
+     2/10: $0\jump_mem[0:0]
+     3/10: $0\mem_read_mem[0:0]
+     4/10: $0\mem_to_reg_mem[0:0]
+     5/10: $0\reg_write_mem[0:0]
+     6/10: $0\rd_mem[4:0]
+     7/10: $0\rd2_mem[31:0]
+     8/10: $0\alu_out_mem[31:0]
+     9/10: $0\pc_plus_4_mem[31:0]
+    10/10: $0\mem_width_mem[1:0]
+Creating decoders for process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+     1/17: $0\mem_width_ex[1:0]
+     2/17: $0\alu_op_ex[1:0]
+     3/17: $0\auipc_ex[0:0]
+     4/17: $0\jump_ex[0:0]
+     5/17: $0\branch_ex[0:0]
+     6/17: $0\alu_src_ex[0:0]
+     7/17: $0\mem_write_ex[0:0]
+     8/17: $0\mem_to_reg_ex[0:0]
+     9/17: $0\reg_write_ex[0:0]
+    10/17: $0\funct7_ex[6:0]
+    11/17: $0\rd_ex[4:0]
+    12/17: $0\imm_ex[31:0]
+    13/17: $0\rd2_ex[31:0]
+    14/17: $0\rd1_ex[31:0]
+    15/17: $0\pc_plus_4_ex[31:0]
+    16/17: $0\funct3_ex[2:0]
+    17/17: $0\mem_read_ex[0:0]
+Creating decoders for process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:496$2185'.
+     1/2: $0\instr_id[31:0]
+     2/2: $0\pc_plus_4_id[31:0]
+Creating decoders for process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:487$2180'.
+     1/1: $0\pc[31:0]
+Creating decoders for process `\alu.$proc$syn/riscv_cpu_flat.v:0$528'.
+Creating decoders for process `\alu.$proc$syn/riscv_cpu_flat.v:241$514'.
+     1/1: $1\result[31:0]
+Creating decoders for process `\alu.$proc$syn/riscv_cpu_flat.v:219$511'.
+     1/2: $2\alu_ctrl[4:0]
+     2/2: $1\alu_ctrl[4:0]
+Creating decoders for process `\immediate_generator.$proc$syn/riscv_cpu_flat.v:0$510'.
+Creating decoders for process `\immediate_generator.$proc$syn/riscv_cpu_flat.v:184$508'.
+     1/2: $2\immediate[31:0]
+     2/2: $1\immediate[31:0]
+Creating decoders for process `\control_unit.$proc$syn/riscv_cpu_flat.v:0$507'.
+Creating decoders for process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+     1/7: { $1\alu_op[1:0] $1\imm_sel[1:0] }
+     2/7: $2\mem_width[1:0]
+     3/7: $1\mem_width[1:0]
+     4/7: $3\mem_width[1:0]
+     5/7: $1\auipc_sel[0:0]
+     6/7: { $1\alu_src[0:0] $1\branch[0:0] $1\jump[0:0] }
+     7/7: { $1\reg_write[0:0] $1\mem_to_reg[0:0] $1\mem_read[0:0] $1\mem_write[0:0] }
+Creating decoders for process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+     1/39: $2$memwr$\registers$syn/riscv_cpu_flat.v:64$423_EN[31:0]$505
+     2/39: $2$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$504
+     3/39: $2$memwr$\registers$syn/riscv_cpu_flat.v:64$423_ADDR[4:0]$503
+     4/39: $1\i[31:0]
+     5/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$422_EN[31:0]$497
+     6/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$421_EN[31:0]$496
+     7/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$420_EN[31:0]$495
+     8/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$419_EN[31:0]$494
+     9/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$418_EN[31:0]$493
+    10/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$417_EN[31:0]$492
+    11/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$416_EN[31:0]$491
+    12/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$415_EN[31:0]$490
+    13/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$414_EN[31:0]$489
+    14/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$413_EN[31:0]$488
+    15/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$412_EN[31:0]$487
+    16/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$411_EN[31:0]$486
+    17/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$410_EN[31:0]$485
+    18/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$409_EN[31:0]$484
+    19/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$408_EN[31:0]$483
+    20/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$407_EN[31:0]$482
+    21/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$406_EN[31:0]$481
+    22/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$405_EN[31:0]$480
+    23/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$404_EN[31:0]$479
+    24/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$403_EN[31:0]$478
+    25/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$402_EN[31:0]$477
+    26/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$401_EN[31:0]$476
+    27/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$400_EN[31:0]$475
+    28/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$399_EN[31:0]$474
+    29/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$398_EN[31:0]$473
+    30/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$397_EN[31:0]$472
+    31/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$396_EN[31:0]$471
+    32/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$395_EN[31:0]$470
+    33/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$394_EN[31:0]$469
+    34/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$393_EN[31:0]$468
+    35/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$392_EN[31:0]$467
+    36/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:62$391_EN[31:0]$466
+    37/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:64$423_EN[31:0]$500
+    38/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$499
+    39/39: $1$memwr$\registers$syn/riscv_cpu_flat.v:64$423_ADDR[4:0]$498
+Creating decoders for process `\branch_control.$proc$syn/riscv_cpu_flat.v:0$2148'.
+Creating decoders for process `\branch_control.$proc$syn/riscv_cpu_flat.v:320$2135'.
+     1/1: $1\branch_taken[0:0]
+
+3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\alu.\_sv2v_0' from process `\alu.$proc$syn/riscv_cpu_flat.v:0$528'.
+No latch inferred for signal `\alu.\result' from process `\alu.$proc$syn/riscv_cpu_flat.v:241$514'.
+No latch inferred for signal `\alu.\alu_ctrl' from process `\alu.$proc$syn/riscv_cpu_flat.v:219$511'.
+No latch inferred for signal `\immediate_generator.\_sv2v_0' from process `\immediate_generator.$proc$syn/riscv_cpu_flat.v:0$510'.
+No latch inferred for signal `\immediate_generator.\immediate' from process `\immediate_generator.$proc$syn/riscv_cpu_flat.v:184$508'.
+No latch inferred for signal `\control_unit.\_sv2v_0' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:0$507'.
+No latch inferred for signal `\control_unit.\reg_write' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+No latch inferred for signal `\control_unit.\mem_to_reg' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+No latch inferred for signal `\control_unit.\mem_read' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+No latch inferred for signal `\control_unit.\mem_write' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+No latch inferred for signal `\control_unit.\alu_src' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+No latch inferred for signal `\control_unit.\branch' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+No latch inferred for signal `\control_unit.\jump' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+No latch inferred for signal `\control_unit.\alu_op' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+No latch inferred for signal `\control_unit.\imm_sel' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+No latch inferred for signal `\control_unit.\mem_width' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+No latch inferred for signal `\control_unit.\auipc_sel' from process `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+No latch inferred for signal `\branch_control.\_sv2v_0' from process `\branch_control.$proc$syn/riscv_cpu_flat.v:0$2148'.
+No latch inferred for signal `\branch_control.\branch_taken' from process `\branch_control.$proc$syn/riscv_cpu_flat.v:320$2135'.
+
+3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\riscv_cpu.\alu_out_wb' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:611$2204'.
+  created $dff cell `$procdff$2562' with positive edge clock.
+Creating register for signal `\riscv_cpu.\mem_data_wb' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:611$2204'.
+  created $dff cell `$procdff$2563' with positive edge clock.
+Creating register for signal `\riscv_cpu.\pc_plus_4_wb' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:611$2204'.
+  created $dff cell `$procdff$2564' with positive edge clock.
+Creating register for signal `\riscv_cpu.\rd_wb' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:611$2204'.
+  created $dff cell `$procdff$2565' with positive edge clock.
+Creating register for signal `\riscv_cpu.\reg_write_wb' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:611$2204'.
+  created $dff cell `$procdff$2566' with positive edge clock.
+Creating register for signal `\riscv_cpu.\mem_to_reg_wb' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:611$2204'.
+  created $dff cell `$procdff$2567' with positive edge clock.
+Creating register for signal `\riscv_cpu.\jump_wb' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:611$2204'.
+  created $dff cell `$procdff$2568' with positive edge clock.
+Creating register for signal `\riscv_cpu.\alu_out_mem' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+  created $dff cell `$procdff$2569' with positive edge clock.
+Creating register for signal `\riscv_cpu.\rd2_mem' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+  created $dff cell `$procdff$2570' with positive edge clock.
+Creating register for signal `\riscv_cpu.\pc_plus_4_mem' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+  created $dff cell `$procdff$2571' with positive edge clock.
+Creating register for signal `\riscv_cpu.\rd_mem' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+  created $dff cell `$procdff$2572' with positive edge clock.
+Creating register for signal `\riscv_cpu.\reg_write_mem' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+  created $dff cell `$procdff$2573' with positive edge clock.
+Creating register for signal `\riscv_cpu.\mem_to_reg_mem' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+  created $dff cell `$procdff$2574' with positive edge clock.
+Creating register for signal `\riscv_cpu.\mem_read_mem' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+  created $dff cell `$procdff$2575' with positive edge clock.
+Creating register for signal `\riscv_cpu.\mem_write_mem' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+  created $dff cell `$procdff$2576' with positive edge clock.
+Creating register for signal `\riscv_cpu.\jump_mem' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+  created $dff cell `$procdff$2577' with positive edge clock.
+Creating register for signal `\riscv_cpu.\mem_width_mem' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+  created $dff cell `$procdff$2578' with positive edge clock.
+Creating register for signal `\riscv_cpu.\pc_plus_4_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2579' with positive edge clock.
+Creating register for signal `\riscv_cpu.\rd1_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2580' with positive edge clock.
+Creating register for signal `\riscv_cpu.\rd2_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2581' with positive edge clock.
+Creating register for signal `\riscv_cpu.\imm_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2582' with positive edge clock.
+Creating register for signal `\riscv_cpu.\rd_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2583' with positive edge clock.
+Creating register for signal `\riscv_cpu.\funct3_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2584' with positive edge clock.
+Creating register for signal `\riscv_cpu.\funct7_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2585' with positive edge clock.
+Creating register for signal `\riscv_cpu.\alu_op_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2586' with positive edge clock.
+Creating register for signal `\riscv_cpu.\reg_write_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2587' with positive edge clock.
+Creating register for signal `\riscv_cpu.\mem_to_reg_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2588' with positive edge clock.
+Creating register for signal `\riscv_cpu.\mem_read_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2589' with positive edge clock.
+Creating register for signal `\riscv_cpu.\mem_write_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2590' with positive edge clock.
+Creating register for signal `\riscv_cpu.\alu_src_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2591' with positive edge clock.
+Creating register for signal `\riscv_cpu.\branch_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2592' with positive edge clock.
+Creating register for signal `\riscv_cpu.\jump_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2593' with positive edge clock.
+Creating register for signal `\riscv_cpu.\auipc_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2594' with positive edge clock.
+Creating register for signal `\riscv_cpu.\mem_width_ex' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+  created $dff cell `$procdff$2595' with positive edge clock.
+Creating register for signal `\riscv_cpu.\pc_plus_4_id' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:496$2185'.
+  created $dff cell `$procdff$2596' with positive edge clock.
+Creating register for signal `\riscv_cpu.\instr_id' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:496$2185'.
+  created $dff cell `$procdff$2597' with positive edge clock.
+Creating register for signal `\riscv_cpu.\pc' using process `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:487$2180'.
+  created $dff cell `$procdff$2598' with positive edge clock.
+Creating register for signal `\register_file.\i' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2599' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$391_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2600' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$392_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2601' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$393_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2602' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$394_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2603' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$395_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2604' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$396_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2605' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$397_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2606' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$398_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2607' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$399_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2608' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$400_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2609' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$401_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2610' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$402_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2611' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$403_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2612' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$404_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2613' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$405_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2614' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$406_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2615' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$407_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2616' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$408_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2617' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$409_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2618' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$410_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2619' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$411_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2620' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$412_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2621' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$413_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2622' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$414_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2623' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$415_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2624' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$416_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2625' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$417_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2626' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$418_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2627' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$419_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2628' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$420_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2629' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$421_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2630' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:62$422_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2631' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:64$423_ADDR' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2632' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2633' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$syn/riscv_cpu_flat.v:64$423_EN' using process `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+  created $dff cell `$procdff$2634' with positive edge clock.
+
+3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 1 empty switch in `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:611$2204'.
+Removing empty process `riscv_cpu.$proc$syn/riscv_cpu_flat.v:611$2204'.
+Found and cleaned up 1 empty switch in `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+Removing empty process `riscv_cpu.$proc$syn/riscv_cpu_flat.v:587$2199'.
+Found and cleaned up 1 empty switch in `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+Removing empty process `riscv_cpu.$proc$syn/riscv_cpu_flat.v:542$2186'.
+Found and cleaned up 2 empty switches in `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:496$2185'.
+Removing empty process `riscv_cpu.$proc$syn/riscv_cpu_flat.v:496$2185'.
+Found and cleaned up 2 empty switches in `\riscv_cpu.$proc$syn/riscv_cpu_flat.v:487$2180'.
+Removing empty process `riscv_cpu.$proc$syn/riscv_cpu_flat.v:487$2180'.
+Removing empty process `alu.$proc$syn/riscv_cpu_flat.v:0$528'.
+Found and cleaned up 1 empty switch in `\alu.$proc$syn/riscv_cpu_flat.v:241$514'.
+Removing empty process `alu.$proc$syn/riscv_cpu_flat.v:241$514'.
+Found and cleaned up 2 empty switches in `\alu.$proc$syn/riscv_cpu_flat.v:219$511'.
+Removing empty process `alu.$proc$syn/riscv_cpu_flat.v:219$511'.
+Removing empty process `immediate_generator.$proc$syn/riscv_cpu_flat.v:0$510'.
+Found and cleaned up 2 empty switches in `\immediate_generator.$proc$syn/riscv_cpu_flat.v:184$508'.
+Removing empty process `immediate_generator.$proc$syn/riscv_cpu_flat.v:184$508'.
+Removing empty process `control_unit.$proc$syn/riscv_cpu_flat.v:0$507'.
+Found and cleaned up 3 empty switches in `\control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+Removing empty process `control_unit.$proc$syn/riscv_cpu_flat.v:97$506'.
+Found and cleaned up 2 empty switches in `\register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+Removing empty process `register_file.$proc$syn/riscv_cpu_flat.v:59$430'.
+Removing empty process `branch_control.$proc$syn/riscv_cpu_flat.v:0$2148'.
+Found and cleaned up 1 empty switch in `\branch_control.$proc$syn/riscv_cpu_flat.v:320$2135'.
+Removing empty process `branch_control.$proc$syn/riscv_cpu_flat.v:320$2135'.
+Cleaned up 18 empty switches.
+
+3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module riscv_cpu.
+<suppressed ~6 debug messages>
+Optimizing module alu.
+<suppressed ~4 debug messages>
+Optimizing module immediate_generator.
+<suppressed ~1 debug messages>
+Optimizing module control_unit.
+<suppressed ~2 debug messages>
+Optimizing module register_file.
+<suppressed ~3 debug messages>
+Optimizing module hazard_detection.
+<suppressed ~4 debug messages>
+Optimizing module branch_control.
+<suppressed ~1 debug messages>
+
+4. Executing OPT pass (performing simple optimizations).
+
+4.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module riscv_cpu.
+Optimizing module alu.
+Optimizing module immediate_generator.
+Optimizing module control_unit.
+Optimizing module register_file.
+Optimizing module hazard_detection.
+Optimizing module branch_control.
+
+4.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\riscv_cpu'.
+<suppressed ~12 debug messages>
+Finding identical cells in module `\alu'.
+<suppressed ~3 debug messages>
+Finding identical cells in module `\immediate_generator'.
+<suppressed ~3 debug messages>
+Finding identical cells in module `\control_unit'.
+<suppressed ~63 debug messages>
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\hazard_detection'.
+<suppressed ~12 debug messages>
+Finding identical cells in module `\branch_control'.
+<suppressed ~6 debug messages>
+Removed a total of 33 cells.
+
+4.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $procmux$2345.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $procmux$2355.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $procmux$2382.
+    dead port 2/2 on $mux $procmux$2403.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 1/2 on $mux $procmux$2444.
+    dead port 1/2 on $mux $procmux$2438.
+    dead port 1/2 on $mux $procmux$2432.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 7 multiplexer ports.
+<suppressed ~88 debug messages>
+
+4.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \riscv_cpu.
+  Optimizing cells in module \alu.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \control_unit.
+    New ctrl vector for $pmux cell $procmux$2409: { $procmux$2414_CMP $procmux$2423_CMP $procmux$2422_CMP $auto$opt_reduce.cc:137:opt_pmux$2669 }
+    New ctrl vector for $pmux cell $procmux$2419: { $procmux$2425_CMP $procmux$2424_CMP $auto$opt_reduce.cc:137:opt_pmux$2671 }
+    New ctrl vector for $pmux cell $procmux$2363: { $auto$opt_reduce.cc:137:opt_pmux$2675 $procmux$2424_CMP $procmux$2414_CMP $procmux$2421_CMP $auto$opt_reduce.cc:137:opt_pmux$2673 }
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \register_file.
+    Consolidated identical input bits for $mux cell $procmux$2543:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2543_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2543_Y [0]
+      New connections: $procmux$2543_Y [31:1] = { $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] $procmux$2543_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2540:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2540_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2540_Y [0]
+      New connections: $procmux$2540_Y [31:1] = { $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] $procmux$2540_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2537:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2537_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2537_Y [0]
+      New connections: $procmux$2537_Y [31:1] = { $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] $procmux$2537_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2534:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2534_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2534_Y [0]
+      New connections: $procmux$2534_Y [31:1] = { $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] $procmux$2534_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2531:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2531_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2531_Y [0]
+      New connections: $procmux$2531_Y [31:1] = { $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] $procmux$2531_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2528:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2528_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2528_Y [0]
+      New connections: $procmux$2528_Y [31:1] = { $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] $procmux$2528_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2525:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2525_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2525_Y [0]
+      New connections: $procmux$2525_Y [31:1] = { $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] $procmux$2525_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2522:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2522_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2522_Y [0]
+      New connections: $procmux$2522_Y [31:1] = { $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] $procmux$2522_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2519:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2519_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2519_Y [0]
+      New connections: $procmux$2519_Y [31:1] = { $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] $procmux$2519_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2516:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2516_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2516_Y [0]
+      New connections: $procmux$2516_Y [31:1] = { $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] $procmux$2516_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2513:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2513_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2513_Y [0]
+      New connections: $procmux$2513_Y [31:1] = { $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] $procmux$2513_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2510:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2510_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2510_Y [0]
+      New connections: $procmux$2510_Y [31:1] = { $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] $procmux$2510_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2507:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2507_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2507_Y [0]
+      New connections: $procmux$2507_Y [31:1] = { $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] $procmux$2507_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2504:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2504_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2504_Y [0]
+      New connections: $procmux$2504_Y [31:1] = { $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] $procmux$2504_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2501:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2501_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2501_Y [0]
+      New connections: $procmux$2501_Y [31:1] = { $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] $procmux$2501_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2498:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2498_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2498_Y [0]
+      New connections: $procmux$2498_Y [31:1] = { $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] $procmux$2498_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2495:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2495_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2495_Y [0]
+      New connections: $procmux$2495_Y [31:1] = { $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] $procmux$2495_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2492:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2492_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2492_Y [0]
+      New connections: $procmux$2492_Y [31:1] = { $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] $procmux$2492_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2489:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2489_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2489_Y [0]
+      New connections: $procmux$2489_Y [31:1] = { $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] $procmux$2489_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2486:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2486_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2486_Y [0]
+      New connections: $procmux$2486_Y [31:1] = { $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] $procmux$2486_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2483:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2483_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2483_Y [0]
+      New connections: $procmux$2483_Y [31:1] = { $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] $procmux$2483_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2480:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2480_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2480_Y [0]
+      New connections: $procmux$2480_Y [31:1] = { $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] $procmux$2480_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2477:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2477_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2477_Y [0]
+      New connections: $procmux$2477_Y [31:1] = { $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] $procmux$2477_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2474:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2474_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2474_Y [0]
+      New connections: $procmux$2474_Y [31:1] = { $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] $procmux$2474_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2471:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2471_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2471_Y [0]
+      New connections: $procmux$2471_Y [31:1] = { $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] $procmux$2471_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2468:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2468_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2468_Y [0]
+      New connections: $procmux$2468_Y [31:1] = { $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] $procmux$2468_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2465:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2465_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2465_Y [0]
+      New connections: $procmux$2465_Y [31:1] = { $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] $procmux$2465_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2462:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2462_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2462_Y [0]
+      New connections: $procmux$2462_Y [31:1] = { $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] $procmux$2462_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2459:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2459_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2459_Y [0]
+      New connections: $procmux$2459_Y [31:1] = { $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] $procmux$2459_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2456:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2456_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2456_Y [0]
+      New connections: $procmux$2456_Y [31:1] = { $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] $procmux$2456_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2453:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2453_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2453_Y [0]
+      New connections: $procmux$2453_Y [31:1] = { $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] $procmux$2453_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2450:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2450_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2450_Y [0]
+      New connections: $procmux$2450_Y [31:1] = { $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] $procmux$2450_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$2429:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$2429_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$2429_Y [0]
+      New connections: $procmux$2429_Y [31:1] = { $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] $procmux$2429_Y [0] }
+  Optimizing cells in module \register_file.
+    Consolidated identical input bits for $mux cell $procmux$2546:
+      Old ports: A=$2$memwr$\registers$syn/riscv_cpu_flat.v:64$423_EN[31:0]$505, B=0, Y=$procmux$2546_Y
+      New ports: A=$procmux$2429_Y [0], B=1'0, Y=$procmux$2546_Y [0]
+      New connections: $procmux$2546_Y [31:1] = { $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] $procmux$2546_Y [0] }
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \branch_control.
+Performed a total of 37 changes.
+
+4.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\riscv_cpu'.
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\control_unit'.
+<suppressed ~3 debug messages>
+Finding identical cells in module `\register_file'.
+<suppressed ~186 debug messages>
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\branch_control'.
+Removed a total of 63 cells.
+
+4.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$2595 ($dff) from module riscv_cpu (D = \mem_width_id, Q = \mem_width_ex, rval = 2'00).
+Adding SRST signal on $procdff$2596 ($dff) from module riscv_cpu (D = $procmux$2314_Y, Q = \pc_plus_4_id, rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$2677 ($sdff) from module riscv_cpu (D = $add$syn/riscv_cpu_flat.v:492$2181_Y, Q = \pc_plus_4_id).
+Adding SRST signal on $procdff$2597 ($dff) from module riscv_cpu (D = $procmux$2309_Y, Q = \instr_id, rval = 19).
+Adding EN signal on $auto$ff.cc:266:slice$2679 ($sdff) from module riscv_cpu (D = \imem_data, Q = \instr_id).
+Adding SRST signal on $procdff$2594 ($dff) from module riscv_cpu (D = \auipc_id, Q = \auipc_ex, rval = 1'0).
+Adding SRST signal on $procdff$2598 ($dff) from module riscv_cpu (D = $procmux$2319_Y, Q = \pc, rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$2682 ($sdff) from module riscv_cpu (D = $ternary$syn/riscv_cpu_flat.v:495$2184_Y, Q = \pc).
+Adding SRST signal on $procdff$2562 ($dff) from module riscv_cpu (D = \alu_out_mem, Q = \alu_out_wb, rval = 0).
+Adding SRST signal on $procdff$2563 ($dff) from module riscv_cpu (D = \dmem_rdata, Q = \mem_data_wb, rval = 0).
+Adding SRST signal on $procdff$2564 ($dff) from module riscv_cpu (D = \pc_plus_4_mem, Q = \pc_plus_4_wb, rval = 0).
+Adding SRST signal on $procdff$2565 ($dff) from module riscv_cpu (D = \rd_mem, Q = \rd_wb, rval = 5'00000).
+Adding SRST signal on $procdff$2566 ($dff) from module riscv_cpu (D = \reg_write_mem, Q = \reg_write_wb, rval = 1'0).
+Adding SRST signal on $procdff$2567 ($dff) from module riscv_cpu (D = \mem_to_reg_mem, Q = \mem_to_reg_wb, rval = 1'0).
+Adding SRST signal on $procdff$2568 ($dff) from module riscv_cpu (D = \jump_mem, Q = \jump_wb, rval = 1'0).
+Adding SRST signal on $procdff$2569 ($dff) from module riscv_cpu (D = \alu_out, Q = \alu_out_mem, rval = 0).
+Adding SRST signal on $procdff$2570 ($dff) from module riscv_cpu (D = \rd2_ex, Q = \rd2_mem, rval = 0).
+Adding SRST signal on $procdff$2571 ($dff) from module riscv_cpu (D = \pc_plus_4_ex, Q = \pc_plus_4_mem, rval = 0).
+Adding SRST signal on $procdff$2572 ($dff) from module riscv_cpu (D = \rd_ex, Q = \rd_mem, rval = 5'00000).
+Adding SRST signal on $procdff$2573 ($dff) from module riscv_cpu (D = \reg_write_ex, Q = \reg_write_mem, rval = 1'0).
+Adding SRST signal on $procdff$2574 ($dff) from module riscv_cpu (D = \mem_to_reg_ex, Q = \mem_to_reg_mem, rval = 1'0).
+Adding SRST signal on $procdff$2575 ($dff) from module riscv_cpu (D = \mem_read_ex, Q = \mem_read_mem, rval = 1'0).
+Adding SRST signal on $procdff$2576 ($dff) from module riscv_cpu (D = \mem_write_ex, Q = \mem_write_mem, rval = 1'0).
+Adding SRST signal on $procdff$2577 ($dff) from module riscv_cpu (D = \jump_ex, Q = \jump_mem, rval = 1'0).
+Adding SRST signal on $procdff$2578 ($dff) from module riscv_cpu (D = \mem_width_ex, Q = \mem_width_mem, rval = 2'00).
+Adding SRST signal on $procdff$2579 ($dff) from module riscv_cpu (D = \pc_plus_4_id, Q = \pc_plus_4_ex, rval = 0).
+Adding SRST signal on $procdff$2580 ($dff) from module riscv_cpu (D = \rd1_id, Q = \rd1_ex, rval = 0).
+Adding SRST signal on $procdff$2581 ($dff) from module riscv_cpu (D = \rd2_id, Q = \rd2_ex, rval = 0).
+Adding SRST signal on $procdff$2582 ($dff) from module riscv_cpu (D = \imm_id, Q = \imm_ex, rval = 0).
+Adding SRST signal on $procdff$2583 ($dff) from module riscv_cpu (D = \instr_id [11:7], Q = \rd_ex, rval = 5'00000).
+Adding SRST signal on $procdff$2584 ($dff) from module riscv_cpu (D = \instr_id [14:12], Q = \funct3_ex, rval = 3'000).
+Adding SRST signal on $procdff$2585 ($dff) from module riscv_cpu (D = \instr_id [31:25], Q = \funct7_ex, rval = 7'0000000).
+Adding SRST signal on $procdff$2586 ($dff) from module riscv_cpu (D = \alu_op_id, Q = \alu_op_ex, rval = 2'00).
+Adding SRST signal on $procdff$2587 ($dff) from module riscv_cpu (D = \reg_write_id, Q = \reg_write_ex, rval = 1'0).
+Adding SRST signal on $procdff$2588 ($dff) from module riscv_cpu (D = \mem_to_reg_id, Q = \mem_to_reg_ex, rval = 1'0).
+Adding SRST signal on $procdff$2589 ($dff) from module riscv_cpu (D = \mem_read_id, Q = \mem_read_ex, rval = 1'0).
+Adding SRST signal on $procdff$2590 ($dff) from module riscv_cpu (D = \mem_write_id, Q = \mem_write_ex, rval = 1'0).
+Adding SRST signal on $procdff$2591 ($dff) from module riscv_cpu (D = \alu_src_id, Q = \alu_src_ex, rval = 1'0).
+Adding SRST signal on $procdff$2592 ($dff) from module riscv_cpu (D = \branch_id, Q = \branch_ex, rval = 1'0).
+Adding SRST signal on $procdff$2593 ($dff) from module riscv_cpu (D = \jump_id, Q = \jump_ex, rval = 1'0).
+Adding EN signal on $procdff$2599 ($dff) from module register_file (D = 32, Q = \i).
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 1 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 2 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 3 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 4 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 1-bit at position 5 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 6 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 7 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 8 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 9 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 10 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 11 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 12 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 13 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 14 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 15 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 16 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 17 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 18 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 19 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 20 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 21 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 22 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 23 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 24 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 25 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 26 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 27 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 28 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 29 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 30 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+Setting constant 0-bit at position 31 on $auto$ff.cc:266:slice$2716 ($dffe) from module register_file.
+
+4.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \riscv_cpu..
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \branch_control..
+Removed 46 unused cells and 411 unused wires.
+<suppressed ~55 debug messages>
+
+4.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+4.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~20 debug messages>
+
+4.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+    New ctrl vector for $pmux cell $procmux$2390: $auto$opt_reduce.cc:137:opt_pmux$2718
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 1 changes.
+
+4.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+4.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+4.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+4.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~20 debug messages>
+
+4.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 0 changes.
+
+4.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+4.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+4.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+4.23. Finished OPT passes. (There is nothing left to do.)
+
+5. Executing FSM pass (extract and optimize FSM).
+
+5.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+5.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+5.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+5.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+5.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+5.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+5.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+5.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+6. Executing OPT pass (performing simple optimizations).
+
+6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~20 debug messages>
+
+6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 0 changes.
+
+6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+6.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+6.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+6.9. Finished OPT passes. (There is nothing left to do.)
+
+7. Executing MEMORY pass.
+
+7.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+7.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 496 transformations.
+
+7.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+  Analyzing register_file.registers write port 0.
+  Analyzing register_file.registers write port 1.
+  Analyzing register_file.registers write port 2.
+  Analyzing register_file.registers write port 3.
+  Analyzing register_file.registers write port 4.
+  Analyzing register_file.registers write port 5.
+  Analyzing register_file.registers write port 6.
+  Analyzing register_file.registers write port 7.
+  Analyzing register_file.registers write port 8.
+  Analyzing register_file.registers write port 9.
+  Analyzing register_file.registers write port 10.
+  Analyzing register_file.registers write port 11.
+  Analyzing register_file.registers write port 12.
+  Analyzing register_file.registers write port 13.
+  Analyzing register_file.registers write port 14.
+  Analyzing register_file.registers write port 15.
+  Analyzing register_file.registers write port 16.
+  Analyzing register_file.registers write port 17.
+  Analyzing register_file.registers write port 18.
+  Analyzing register_file.registers write port 19.
+  Analyzing register_file.registers write port 20.
+  Analyzing register_file.registers write port 21.
+  Analyzing register_file.registers write port 22.
+  Analyzing register_file.registers write port 23.
+  Analyzing register_file.registers write port 24.
+  Analyzing register_file.registers write port 25.
+  Analyzing register_file.registers write port 26.
+  Analyzing register_file.registers write port 27.
+  Analyzing register_file.registers write port 28.
+  Analyzing register_file.registers write port 29.
+  Analyzing register_file.registers write port 30.
+  Analyzing register_file.registers write port 31.
+  Analyzing register_file.registers write port 32.
+
+7.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+7.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+Checking read port `\registers'[0] in module `\register_file': no output FF found.
+Checking read port `\registers'[1] in module `\register_file': no output FF found.
+Checking read port address `\registers'[0] in module `\register_file': no address FF found.
+Checking read port address `\registers'[1] in module `\register_file': no address FF found.
+
+7.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+7.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+Consolidating read ports of memory register_file.registers by address:
+Consolidating write ports of memory register_file.registers by address:
+  Merging ports 0, 1 (address 0).
+  Merging ports 0, 2 (address 0).
+  Merging ports 0, 3 (address 0).
+  Merging ports 0, 4 (address 0).
+  Merging ports 0, 5 (address 0).
+  Merging ports 0, 6 (address 0).
+  Merging ports 0, 7 (address 0).
+  Merging ports 0, 8 (address 0).
+  Merging ports 0, 9 (address 0).
+  Merging ports 0, 10 (address 0).
+  Merging ports 0, 11 (address 0).
+  Merging ports 0, 12 (address 0).
+  Merging ports 0, 13 (address 0).
+  Merging ports 0, 14 (address 0).
+  Merging ports 0, 15 (address 0).
+  Merging ports 0, 16 (address 0).
+  Merging ports 0, 17 (address 0).
+  Merging ports 0, 18 (address 0).
+  Merging ports 0, 19 (address 0).
+  Merging ports 0, 20 (address 0).
+  Merging ports 0, 21 (address 0).
+  Merging ports 0, 22 (address 0).
+  Merging ports 0, 23 (address 0).
+  Merging ports 0, 24 (address 0).
+  Merging ports 0, 25 (address 0).
+  Merging ports 0, 26 (address 0).
+  Merging ports 0, 27 (address 0).
+  Merging ports 0, 28 (address 0).
+  Merging ports 0, 29 (address 0).
+  Merging ports 0, 30 (address 0).
+  Merging ports 0, 31 (address 0).
+Consolidating write ports of memory register_file.registers by address:
+Consolidating write ports of memory register_file.registers using sat-based resource sharing:
+
+7.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+7.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+7.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+7.11. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+Mapping memory \registers in module \register_file:
+  created 32 $dff cells and 0 static cells of width 32.
+  read interface: 0 $dff and 62 $mux cells.
+  write interface: 64 write mux blocks.
+
+8. Executing OPT pass (performing simple optimizations).
+
+8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+<suppressed ~121 debug messages>
+Optimizing module riscv_cpu.
+
+8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~52 debug messages>
+
+8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 0 changes.
+
+8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+8.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+Removed 0 unused cells and 212 unused wires.
+<suppressed ~1 debug messages>
+
+8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+8.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+8.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~52 debug messages>
+
+8.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 0 changes.
+
+8.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+8.13. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $memory\registers[9]$2741 ($dff) from module register_file (D = $memory\registers$wrmux[9][1][0]$y$3190, Q = \registers[9]).
+Adding EN signal on $memory\registers[8]$2739 ($dff) from module register_file (D = $memory\registers$wrmux[8][1][0]$y$3174, Q = \registers[8]).
+Adding EN signal on $memory\registers[7]$2737 ($dff) from module register_file (D = $memory\registers$wrmux[7][1][0]$y$3154, Q = \registers[7]).
+Adding EN signal on $memory\registers[6]$2735 ($dff) from module register_file (D = $memory\registers$wrmux[6][1][0]$y$3138, Q = \registers[6]).
+Adding EN signal on $memory\registers[5]$2733 ($dff) from module register_file (D = $memory\registers$wrmux[5][1][0]$y$3122, Q = \registers[5]).
+Adding EN signal on $memory\registers[4]$2731 ($dff) from module register_file (D = $memory\registers$wrmux[4][1][0]$y$3106, Q = \registers[4]).
+Adding EN signal on $memory\registers[3]$2729 ($dff) from module register_file (D = $memory\registers$wrmux[3][1][0]$y$3086, Q = \registers[3]).
+Adding EN signal on $memory\registers[31]$2785 ($dff) from module register_file (D = $memory\registers$wrmux[31][1][0]$y$3518, Q = \registers[31]).
+Adding EN signal on $memory\registers[30]$2783 ($dff) from module register_file (D = $memory\registers$wrmux[30][1][0]$y$3504, Q = \registers[30]).
+Adding EN signal on $memory\registers[2]$2727 ($dff) from module register_file (D = $memory\registers$wrmux[2][1][0]$y$3068, Q = \registers[2]).
+Adding EN signal on $memory\registers[29]$2781 ($dff) from module register_file (D = $memory\registers$wrmux[29][1][0]$y$3490, Q = \registers[29]).
+Adding EN signal on $memory\registers[28]$2779 ($dff) from module register_file (D = $memory\registers$wrmux[28][1][0]$y$3476, Q = \registers[28]).
+Adding EN signal on $memory\registers[27]$2777 ($dff) from module register_file (D = $memory\registers$wrmux[27][1][0]$y$3462, Q = \registers[27]).
+Adding EN signal on $memory\registers[26]$2775 ($dff) from module register_file (D = $memory\registers$wrmux[26][1][0]$y$3448, Q = \registers[26]).
+Adding EN signal on $memory\registers[25]$2773 ($dff) from module register_file (D = $memory\registers$wrmux[25][1][0]$y$3434, Q = \registers[25]).
+Adding EN signal on $memory\registers[24]$2771 ($dff) from module register_file (D = $memory\registers$wrmux[24][1][0]$y$3420, Q = \registers[24]).
+Adding EN signal on $memory\registers[23]$2769 ($dff) from module register_file (D = $memory\registers$wrmux[23][1][0]$y$3406, Q = \registers[23]).
+Adding EN signal on $memory\registers[22]$2767 ($dff) from module register_file (D = $memory\registers$wrmux[22][1][0]$y$3392, Q = \registers[22]).
+Adding EN signal on $memory\registers[21]$2765 ($dff) from module register_file (D = $memory\registers$wrmux[21][1][0]$y$3378, Q = \registers[21]).
+Adding EN signal on $memory\registers[20]$2763 ($dff) from module register_file (D = $memory\registers$wrmux[20][1][0]$y$3364, Q = \registers[20]).
+Adding EN signal on $memory\registers[1]$2725 ($dff) from module register_file (D = $memory\registers$wrmux[1][1][0]$y$3048, Q = \registers[1]).
+Adding EN signal on $memory\registers[19]$2761 ($dff) from module register_file (D = $memory\registers$wrmux[19][1][0]$y$3350, Q = \registers[19]).
+Adding EN signal on $memory\registers[18]$2759 ($dff) from module register_file (D = $memory\registers$wrmux[18][1][0]$y$3336, Q = \registers[18]).
+Adding EN signal on $memory\registers[17]$2757 ($dff) from module register_file (D = $memory\registers$wrmux[17][1][0]$y$3322, Q = \registers[17]).
+Adding EN signal on $memory\registers[16]$2755 ($dff) from module register_file (D = $memory\registers$wrmux[16][1][0]$y$3308, Q = \registers[16]).
+Adding EN signal on $memory\registers[15]$2753 ($dff) from module register_file (D = $memory\registers$wrmux[15][1][0]$y$3288, Q = \registers[15]).
+Adding EN signal on $memory\registers[14]$2751 ($dff) from module register_file (D = $memory\registers$wrmux[14][1][0]$y$3272, Q = \registers[14]).
+Adding EN signal on $memory\registers[13]$2749 ($dff) from module register_file (D = $memory\registers$wrmux[13][1][0]$y$3256, Q = \registers[13]).
+Adding EN signal on $memory\registers[12]$2747 ($dff) from module register_file (D = $memory\registers$wrmux[12][1][0]$y$3240, Q = \registers[12]).
+Adding EN signal on $memory\registers[11]$2745 ($dff) from module register_file (D = $memory\registers$wrmux[11][1][0]$y$3222, Q = \registers[11]).
+Adding EN signal on $memory\registers[10]$2743 ($dff) from module register_file (D = $memory\registers$wrmux[10][1][0]$y$3206, Q = \registers[10]).
+Adding EN signal on $memory\registers[0]$2723 ($dff) from module register_file (D = $memory\registers$wrmux[0][1][0]$y$3028, Q = \registers[0]).
+
+8.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+8.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+<suppressed ~32 debug messages>
+Optimizing module riscv_cpu.
+
+8.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+8.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~52 debug messages>
+
+8.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 0 changes.
+
+8.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+<suppressed ~93 debug messages>
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 31 cells.
+
+8.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+8.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+Removed 0 unused cells and 31 unused wires.
+<suppressed ~1 debug messages>
+
+8.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+8.23. Rerunning OPT passes. (Maybe there is more to do..)
+
+8.24. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~53 debug messages>
+
+8.25. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 0 changes.
+
+8.26. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+8.27. Executing OPT_DFF pass (perform DFF optimizations).
+
+8.28. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+8.29. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+8.30. Finished OPT passes. (There is nothing left to do.)
+
+9. Executing SYNTH pass.
+
+9.1. Executing HIERARCHY pass (managing design hierarchy).
+
+9.1.1. Analyzing design hierarchy..
+Top module:  \riscv_cpu
+Used module:     \alu
+Used module:     \branch_control
+Used module:     \control_unit
+Used module:     \hazard_detection
+Used module:     \immediate_generator
+Used module:     \register_file
+
+9.1.2. Analyzing design hierarchy..
+Top module:  \riscv_cpu
+Used module:     \alu
+Used module:     \branch_control
+Used module:     \control_unit
+Used module:     \hazard_detection
+Used module:     \immediate_generator
+Used module:     \register_file
+Removed 0 unused modules.
+
+9.2. Executing PROC pass (convert processes to netlists).
+
+9.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+9.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+9.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+9.2.4. Executing PROC_INIT pass (extract init attributes).
+
+9.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+9.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+9.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+9.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+9.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+9.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+9.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+9.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.3. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+9.5. Executing CHECK pass (checking for obvious problems).
+Checking module alu...
+Checking module branch_control...
+Checking module control_unit...
+Checking module hazard_detection...
+Checking module immediate_generator...
+Checking module register_file...
+Checking module riscv_cpu...
+Found and reported 0 problems.
+
+9.6. Executing OPT pass (performing simple optimizations).
+
+9.6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~53 debug messages>
+
+9.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 0 changes.
+
+9.6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.6.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+9.6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+9.6.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.6.9. Finished OPT passes. (There is nothing left to do.)
+
+9.7. Executing FSM pass (extract and optimize FSM).
+
+9.7.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+9.7.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+9.7.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+9.7.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+9.7.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+9.7.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+9.7.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+9.7.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+9.8. Executing OPT pass (performing simple optimizations).
+
+9.8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~53 debug messages>
+
+9.8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 0 changes.
+
+9.8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.8.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+9.8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+9.8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.8.9. Finished OPT passes. (There is nothing left to do.)
+
+9.9. Executing WREDUCE pass (reducing word size of cells).
+Removed top 1 bits (of 2) from port B of cell alu.$procmux$2350_CMP0 ($eq).
+Removed top 2 bits (of 3) from port B of cell alu.$procmux$2343_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell alu.$procmux$2342_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell alu.$procmux$2341_CMP0 ($eq).
+Removed top 4 bits (of 5) from port B of cell alu.$procmux$2334_CMP0 ($eq).
+Removed top 3 bits (of 5) from port B of cell alu.$procmux$2333_CMP0 ($eq).
+Removed top 3 bits (of 5) from port B of cell alu.$procmux$2332_CMP0 ($eq).
+Removed top 2 bits (of 5) from port B of cell alu.$procmux$2331_CMP0 ($eq).
+Removed top 2 bits (of 5) from port B of cell alu.$procmux$2330_CMP0 ($eq).
+Removed top 2 bits (of 5) from port B of cell alu.$procmux$2329_CMP0 ($eq).
+Removed top 2 bits (of 5) from port B of cell alu.$procmux$2328_CMP0 ($eq).
+Removed top 1 bits (of 5) from port B of cell alu.$procmux$2327_CMP0 ($eq).
+Removed top 1 bits (of 5) from port B of cell alu.$procmux$2326_CMP0 ($eq).
+Removed top 2 bits (of 5) from mux cell alu.$ternary$syn/riscv_cpu_flat.v:228$512 ($mux).
+Removed top 4 bits (of 5) from mux cell alu.$ternary$syn/riscv_cpu_flat.v:233$513 ($mux).
+Removed top 31 bits (of 32) from mux cell alu.$ternary$syn/riscv_cpu_flat.v:253$524 ($mux).
+Removed top 31 bits (of 32) from mux cell alu.$ternary$syn/riscv_cpu_flat.v:254$526 ($mux).
+Removed top 2 bits (of 5) from wire alu.$ternary$syn/riscv_cpu_flat.v:228$512_Y.
+Removed top 31 bits (of 32) from wire alu.$ternary$syn/riscv_cpu_flat.v:253$524_Y.
+Removed top 31 bits (of 32) from wire alu.$ternary$syn/riscv_cpu_flat.v:254$526_Y.
+Removed top 2 bits (of 3) from port B of cell branch_control.$procmux$2560_CMP0 ($eq).
+Removed top 1 bits (of 7) from port B of cell control_unit.$procmux$2421_CMP0 ($eq).
+Removed top 2 bits (of 7) from port B of cell control_unit.$procmux$2420_CMP0 ($eq).
+Removed top 2 bits (of 3) from port B of cell control_unit.$procmux$2401_CMP0 ($eq).
+Removed top 1 bits (of 7) from port B of cell control_unit.$procmux$2427_CMP0 ($eq).
+Removed top 2 bits (of 7) from port B of cell control_unit.$procmux$2426_CMP0 ($eq).
+Removed top 5 bits (of 7) from port B of cell control_unit.$procmux$2425_CMP0 ($eq).
+Removed top 1 bits (of 7) from port B of cell control_unit.$procmux$2424_CMP0 ($eq).
+Removed top 1 bits (of 2) from port B of cell immediate_generator.$procmux$2360_CMP0 ($eq).
+Removed top 1 bits (of 32) from mux cell immediate_generator.$procmux$2353 ($mux).
+Removed top 29 bits (of 32) from port B of cell riscv_cpu.$add$syn/riscv_cpu_flat.v:492$2181 ($add).
+Removed top 29 bits (of 32) from port B of cell riscv_cpu.$sub$syn/riscv_cpu_flat.v:579$2196 ($sub).
+Removed top 1 bits (of 2) from port B of cell riscv_cpu.$eq$syn/riscv_cpu_flat.v:610$2201 ($eq).
+
+9.10. Executing PEEPOPT pass (run peephole optimizers).
+
+9.11. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+Removed 0 unused cells and 3 unused wires.
+<suppressed ~1 debug messages>
+
+9.12. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module alu:
+  creating $macc model for $add$syn/riscv_cpu_flat.v:248$518 ($add).
+  creating $macc model for $sub$syn/riscv_cpu_flat.v:249$519 ($sub).
+  creating $alu model for $macc $sub$syn/riscv_cpu_flat.v:249$519.
+  creating $alu model for $macc $add$syn/riscv_cpu_flat.v:248$518.
+  creating $alu model for $lt$syn/riscv_cpu_flat.v:253$523 ($lt): new $alu
+  creating $alu model for $lt$syn/riscv_cpu_flat.v:254$525 ($lt): merged with $sub$syn/riscv_cpu_flat.v:249$519.
+  creating $alu cell for $lt$syn/riscv_cpu_flat.v:253$523: $auto$alumacc.cc:495:replace_alu$3619
+  creating $alu cell for $add$syn/riscv_cpu_flat.v:248$518: $auto$alumacc.cc:495:replace_alu$3626
+  creating $alu cell for $sub$syn/riscv_cpu_flat.v:249$519, $lt$syn/riscv_cpu_flat.v:254$525: $auto$alumacc.cc:495:replace_alu$3629
+  created 3 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module branch_control:
+  created 0 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module control_unit:
+  created 0 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module hazard_detection:
+  created 0 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module immediate_generator:
+  created 0 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module register_file:
+  created 0 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module riscv_cpu:
+  creating $macc model for $add$syn/riscv_cpu_flat.v:492$2181 ($add).
+  creating $macc model for $add$syn/riscv_cpu_flat.v:579$2194 ($add).
+  creating $macc model for $add$syn/riscv_cpu_flat.v:579$2197 ($add).
+  creating $macc model for $sub$syn/riscv_cpu_flat.v:579$2196 ($sub).
+  creating $alu model for $macc $sub$syn/riscv_cpu_flat.v:579$2196.
+  creating $alu model for $macc $add$syn/riscv_cpu_flat.v:579$2197.
+  creating $alu model for $macc $add$syn/riscv_cpu_flat.v:579$2194.
+  creating $alu model for $macc $add$syn/riscv_cpu_flat.v:492$2181.
+  creating $alu cell for $add$syn/riscv_cpu_flat.v:492$2181: $auto$alumacc.cc:495:replace_alu$3634
+  creating $alu cell for $add$syn/riscv_cpu_flat.v:579$2194: $auto$alumacc.cc:495:replace_alu$3637
+  creating $alu cell for $add$syn/riscv_cpu_flat.v:579$2197: $auto$alumacc.cc:495:replace_alu$3640
+  creating $alu cell for $sub$syn/riscv_cpu_flat.v:579$2196: $auto$alumacc.cc:495:replace_alu$3643
+  created 4 $alu and 0 $macc cells.
+
+9.13. Executing SHARE pass (SAT-based resource sharing).
+Found 3 cells in module alu that may be considered for resource sharing.
+  Analyzing resource sharing options for $sshr$syn/riscv_cpu_flat.v:252$522 ($sshr):
+    Found 1 activation_patterns using ctrl signal $procmux$2328_CMP.
+    No candidates found.
+  Analyzing resource sharing options for $shr$syn/riscv_cpu_flat.v:251$521 ($shr):
+    Found 1 activation_patterns using ctrl signal $procmux$2329_CMP.
+    No candidates found.
+  Analyzing resource sharing options for $shl$syn/riscv_cpu_flat.v:250$520 ($shl):
+    Found 1 activation_patterns using ctrl signal $procmux$2330_CMP.
+    No candidates found.
+
+9.14. Executing OPT pass (performing simple optimizations).
+
+9.14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+<suppressed ~1 debug messages>
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.14.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~53 debug messages>
+
+9.14.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 0 changes.
+
+9.14.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.14.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+9.14.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+Removed 1 unused cells and 3 unused wires.
+<suppressed ~2 debug messages>
+
+9.14.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.14.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+9.14.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~53 debug messages>
+
+9.14.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 0 changes.
+
+9.14.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.14.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+9.14.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+9.14.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.14.16. Finished OPT passes. (There is nothing left to do.)
+
+9.15. Executing MEMORY pass.
+
+9.15.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+9.15.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+9.15.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+9.15.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+9.15.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+9.15.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+9.15.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+9.15.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+9.15.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+9.15.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+9.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+9.17. Executing OPT pass (performing simple optimizations).
+
+9.17.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+<suppressed ~5 debug messages>
+Optimizing module branch_control.
+Optimizing module control_unit.
+<suppressed ~1 debug messages>
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+<suppressed ~1 debug messages>
+Optimizing module register_file.
+<suppressed ~7 debug messages>
+Optimizing module riscv_cpu.
+<suppressed ~2 debug messages>
+
+9.17.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.17.3. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $auto$ff.cc:266:slice$3525 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[7], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3537 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[3], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3528 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[6], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3522 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[8], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3534 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[4], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3519 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[9], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3531 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[5], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3612 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[0], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3609 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[10], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3606 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[11], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3603 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[12], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3600 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[13], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3597 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[14], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3594 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[15], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3591 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[16], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3588 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[17], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3585 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[18], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3582 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[19], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3579 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[1], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3576 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[20], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3573 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[21], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3570 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[22], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3567 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[23], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3564 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[24], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3561 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[25], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3558 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[26], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3555 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[27], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3552 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[28], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3549 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[29], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3546 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[2], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3543 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[30], rval = 0).
+Adding SRST signal on $auto$ff.cc:266:slice$3540 ($dffe) from module register_file (D = $0$memwr$\registers$syn/riscv_cpu_flat.v:64$423_DATA[31:0]$464, Q = \registers[31], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$2683 ($sdffe) from module riscv_cpu (D = \pc_next [1:0], Q = \pc [1:0]).
+
+9.17.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+Removed 37 unused cells and 47 unused wires.
+<suppressed ~42 debug messages>
+
+9.17.5. Rerunning OPT passes. (Removed registers in this run.)
+
+9.17.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+<suppressed ~1 debug messages>
+
+9.17.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.17.8. Executing OPT_DFF pass (perform DFF optimizations).
+
+9.17.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+9.17.10. Finished fast OPT passes.
+
+9.18. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+9.19. Executing OPT pass (performing simple optimizations).
+
+9.19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.19.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~16 debug messages>
+
+9.19.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+    Consolidated identical input bits for $pmux cell $procmux$2336:
+      Old ports: A={ 2'00 $auto$wreduce.cc:514:run$3615 [2:0] }, B={ 24'001010100001001000100011 \funct7 [5] 10'0000100000 }, Y=$2\alu_ctrl[4:0]
+      New ports: A={ 1'0 $auto$wreduce.cc:514:run$3615 [2:0] }, B={ 19'0101100010010010011 \funct7 [5] 8'00010000 }, Y=$2\alu_ctrl[4:0] [3:0]
+      New connections: $2\alu_ctrl[4:0] [4] = 1'0
+    Consolidated identical input bits for $mux cell $ternary$syn/riscv_cpu_flat.v:228$512:
+      Old ports: A=3'011, B=3'100, Y=$auto$wreduce.cc:514:run$3615 [2:0]
+      New ports: A=2'01, B=2'10, Y={ $auto$wreduce.cc:514:run$3615 [2] $auto$wreduce.cc:514:run$3615 [0] }
+      New connections: $auto$wreduce.cc:514:run$3615 [1] = $auto$wreduce.cc:514:run$3615 [0]
+  Optimizing cells in module \alu.
+    Consolidated identical input bits for $pmux cell $procmux$2347:
+      Old ports: A=5'00011, B={ 10'0010000001 $2\alu_ctrl[4:0] }, Y=\alu_ctrl
+      New ports: A=4'0011, B={ 8'01000001 $2\alu_ctrl[4:0] [3:0] }, Y=\alu_ctrl [3:0]
+      New connections: \alu_ctrl [4] = 1'0
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+    Consolidated identical input bits for $pmux cell $procmux$2419:
+      Old ports: A=4'0000, B=12'111000011000, Y={ \reg_write \mem_to_reg \mem_read \mem_write }
+      New ports: A=3'000, B=9'110001100, Y={ \reg_write \mem_read \mem_write }
+      New connections: \mem_to_reg = \mem_read
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+    Consolidated identical input bits for $mux cell $procmux$2353:
+      Old ports: A={ \instruction [30:12] 12'000000000000 }, B={ \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [19:12] \instruction [20] \instruction [30:21] 1'0 }, Y=$2\immediate[31:0] [30:0]
+      New ports: A={ \instruction [30:20] 11'00000000000 }, B={ \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [20] \instruction [30:21] }, Y={ $2\immediate[31:0] [30:20] $2\immediate[31:0] [11:1] }
+      New connections: { $2\immediate[31:0] [19:12] $2\immediate[31:0] [0] } = { \instruction [19:12] 1'0 }
+    Consolidated identical input bits for $pmux cell $procmux$2357:
+      Old ports: A={ \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31:20] }, B={ \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31:25] \instruction [11:7] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [7] \instruction [30:25] \instruction [11:8] 1'0 \instruction [31] $2\immediate[31:0] [30:0] }, Y=\immediate
+      New ports: A={ \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31:20] }, B={ \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31:25] \instruction [11:7] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [31] \instruction [7] \instruction [30:25] \instruction [11:8] 1'0 $2\immediate[31:0] [30:0] }, Y=\immediate [30:0]
+      New connections: \immediate [31] = \instruction [31]
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+    Consolidated identical input bits for $mux cell $ternary$syn/riscv_cpu_flat.v:610$2202:
+      Old ports: A=4'1111, B=4'0011, Y=$ternary$syn/riscv_cpu_flat.v:610$2202_Y
+      New ports: A=1'1, B=1'0, Y=$ternary$syn/riscv_cpu_flat.v:610$2202_Y [2]
+      New connections: { $ternary$syn/riscv_cpu_flat.v:610$2202_Y [3] $ternary$syn/riscv_cpu_flat.v:610$2202_Y [1:0] } = { $ternary$syn/riscv_cpu_flat.v:610$2202_Y [2] 2'11 }
+  Optimizing cells in module \riscv_cpu.
+    Consolidated identical input bits for $mux cell $ternary$syn/riscv_cpu_flat.v:610$2203:
+      Old ports: A=$ternary$syn/riscv_cpu_flat.v:610$2202_Y, B=4'0001, Y=\dmem_byte_en
+      New ports: A={ $ternary$syn/riscv_cpu_flat.v:610$2202_Y [2] 1'1 }, B=2'00, Y=\dmem_byte_en [2:1]
+      New connections: { \dmem_byte_en [3] \dmem_byte_en [0] } = { \dmem_byte_en [2] 1'1 }
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 8 changes.
+
+9.19.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.19.6. Executing OPT_SHARE pass.
+    Found cells that share an operand and can be merged by moving the $pmux $procmux$2555 in front of them:
+        $and$syn/riscv_cpu_flat.v:329$2147
+        $and$syn/riscv_cpu_flat.v:328$2144
+        $and$syn/riscv_cpu_flat.v:327$2141
+        $and$syn/riscv_cpu_flat.v:326$2139
+        $and$syn/riscv_cpu_flat.v:325$2138
+        $and$syn/riscv_cpu_flat.v:324$2136
+
+9.19.7. Executing OPT_DFF pass (perform DFF optimizations).
+
+9.19.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+Removed 0 unused cells and 6 unused wires.
+<suppressed ~1 debug messages>
+
+9.19.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+<suppressed ~1 debug messages>
+Optimizing module branch_control.
+<suppressed ~1 debug messages>
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+<suppressed ~1 debug messages>
+
+9.19.10. Rerunning OPT passes. (Maybe there is more to do..)
+
+9.19.11. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~17 debug messages>
+
+9.19.12. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+    New ctrl vector for $pmux cell $procmux$2555: $auto$opt_reduce.cc:137:opt_pmux$3694
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 1 changes.
+
+9.19.13. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.19.14. Executing OPT_SHARE pass.
+
+9.19.15. Executing OPT_DFF pass (perform DFF optimizations).
+
+9.19.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+9.19.17. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+<suppressed ~1 debug messages>
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.19.18. Rerunning OPT passes. (Maybe there is more to do..)
+
+9.19.19. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \branch_control..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_detection..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \riscv_cpu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~16 debug messages>
+
+9.19.20. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \branch_control.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \hazard_detection.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \riscv_cpu.
+Performed a total of 0 changes.
+
+9.19.21. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+Removed a total of 0 cells.
+
+9.19.22. Executing OPT_SHARE pass.
+
+9.19.23. Executing OPT_DFF pass (perform DFF optimizations).
+
+9.19.24. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+
+9.19.25. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module riscv_cpu.
+
+9.19.26. Finished OPT passes. (There is nothing left to do.)
+
+9.20. Executing TECHMAP pass (map to technology primitives).
+
+9.20.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/usr/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+9.20.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $reduce_bool.
+Using extmapper simplemap for cells of type $sdffe.
+Using template $paramod$44a13d10af618e7fbe7b9aad2f6151ffcee1e2fa\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $reduce_and.
+Using extmapper simplemap for cells of type $sdff.
+Using template $paramod$fbc7873bff55778c0b3173955b7e4bce1d9d6834\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $mux.
+Using extmapper simplemap for cells of type $logic_or.
+Using extmapper simplemap for cells of type $logic_not.
+Using template $paramod$861f5302217787cd55fd1a501bc728125f176580\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $eq.
+Using extmapper simplemap for cells of type $pos.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000100000 for cells of type $lcu.
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000011110 for cells of type $lcu.
+Using extmapper simplemap for cells of type $or.
+Using extmapper simplemap for cells of type $sdffce.
+Using extmapper simplemap for cells of type $logic_and.
+Using template $paramod$88184249da84238853ee4b15e8f92ee2db8d6f51\_90_pmux for cells of type $pmux.
+Using extmapper simplemap for cells of type $reduce_or.
+Using template $paramod$85df5dc01c7df96a7d8e5f1fdf76ce9ac452af63\_90_pmux for cells of type $pmux.
+Using template $paramod$d31bf4d7d72e59528d18fbd4f322e9d608532043\_90_pmux for cells of type $pmux.
+Using template $paramod$521ce43182eecb9f60c72393a788160d2c356bf5\_90_pmux for cells of type $pmux.
+Using template $paramod$95ab7b964273918a033d1324366ecc612d202989\_90_pmux for cells of type $pmux.
+Using template $paramod$2407ada40cc3dda6c6015be2b49b748cddb5a800\_90_pmux for cells of type $pmux.
+Using template $paramod$33afdd83bf3811dac2de7a968d39eea5718691bc\_90_pmux for cells of type $pmux.
+Using template $paramod$c2e415ef15bc3ccd2723772353a6b450d3d76206\_90_pmux for cells of type $pmux.
+Using template $paramod$constmap:4621fcf06a436d1e2a4080e2ed9866a7d07a6e07$paramod$335cfd09f1afa8139c4aafcbbe5f361887b79c5e\_90_shift_ops_shr_shl_sshl_sshr for cells of type $shl.
+Using template $paramod$constmap:4621fcf06a436d1e2a4080e2ed9866a7d07a6e07$paramod$feecc7a0dbd012970970f2858f15e786e251f677\_90_shift_ops_shr_shl_sshl_sshr for cells of type $shr.
+Using template $paramod$constmap:4621fcf06a436d1e2a4080e2ed9866a7d07a6e07$paramod$e765c459d3029c22a22a27989e94858fd9ebfa9c\_90_shift_ops_shr_shl_sshl_sshr for cells of type $sshr.
+Using template $paramod$104d3d1e82b09b030a785dad8a5e608a6d4401f7\_90_pmux for cells of type $pmux.
+Using template $paramod$2653f68ddb8eab7b1907b4a20767b72a824a7a36\_90_alu for cells of type $alu.
+No more expansions possible.
+<suppressed ~3305 debug messages>
+
+9.21. Executing OPT pass (performing simple optimizations).
+
+9.21.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+<suppressed ~353 debug messages>
+Optimizing module branch_control.
+<suppressed ~15 debug messages>
+Optimizing module control_unit.
+<suppressed ~135 debug messages>
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+<suppressed ~39 debug messages>
+Optimizing module register_file.
+<suppressed ~64 debug messages>
+Optimizing module riscv_cpu.
+<suppressed ~402 debug messages>
+
+9.21.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+<suppressed ~1524 debug messages>
+Finding identical cells in module `\branch_control'.
+<suppressed ~30 debug messages>
+Finding identical cells in module `\control_unit'.
+<suppressed ~183 debug messages>
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+<suppressed ~117 debug messages>
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+<suppressed ~3 debug messages>
+Removed a total of 619 cells.
+
+9.21.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+9.21.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+Removed 150 unused cells and 1086 unused wires.
+<suppressed ~157 debug messages>
+
+9.21.5. Finished fast OPT passes.
+
+9.22. Executing ABC pass (technology mapping using ABC).
+
+9.22.1. Extracting gate netlist of module `\alu' to `<abc-temp-dir>/input.blif'..
+Extracted 1542 gates and 1614 wires to a netlist network with 70 inputs and 33 outputs.
+
+9.22.1.1. Executing ABC.
+Running ABC command: "abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+9.22.1.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:       52
+ABC RESULTS:            ANDNOT cells:      613
+ABC RESULTS:               MUX cells:      290
+ABC RESULTS:              NAND cells:       48
+ABC RESULTS:               NOR cells:       32
+ABC RESULTS:               NOT cells:       93
+ABC RESULTS:                OR cells:      305
+ABC RESULTS:             ORNOT cells:       73
+ABC RESULTS:              XNOR cells:       33
+ABC RESULTS:               XOR cells:       63
+ABC RESULTS:        internal signals:     1511
+ABC RESULTS:           input signals:       70
+ABC RESULTS:          output signals:       33
+Removing temp directory.
+
+9.22.2. Extracting gate netlist of module `\branch_control' to `<abc-temp-dir>/input.blif'..
+Extracted 42 gates and 48 wires to a netlist network with 6 inputs and 1 outputs.
+
+9.22.2.1. Executing ABC.
+Running ABC command: "abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+9.22.2.2. Re-integrating ABC results.
+ABC RESULTS:            ANDNOT cells:        6
+ABC RESULTS:               MUX cells:        3
+ABC RESULTS:              NAND cells:        4
+ABC RESULTS:               NOR cells:        1
+ABC RESULTS:               NOT cells:        1
+ABC RESULTS:                OR cells:        9
+ABC RESULTS:             ORNOT cells:        3
+ABC RESULTS:        internal signals:       41
+ABC RESULTS:           input signals:        6
+ABC RESULTS:          output signals:        1
+Removing temp directory.
+
+9.22.3. Extracting gate netlist of module `\control_unit' to `<abc-temp-dir>/input.blif'..
+Extracted 90 gates and 102 wires to a netlist network with 10 inputs and 13 outputs.
+
+9.22.3.1. Executing ABC.
+Running ABC command: "abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+9.22.3.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:        2
+ABC RESULTS:            ANDNOT cells:       21
+ABC RESULTS:              NAND cells:        3
+ABC RESULTS:               NOR cells:       11
+ABC RESULTS:                OR cells:       22
+ABC RESULTS:             ORNOT cells:        7
+ABC RESULTS:        internal signals:       79
+ABC RESULTS:           input signals:       10
+ABC RESULTS:          output signals:       13
+Removing temp directory.
+
+9.22.4. Extracting gate netlist of module `\hazard_detection' to `<abc-temp-dir>/input.blif'..
+Extracted 88 gates and 119 wires to a netlist network with 31 inputs and 1 outputs.
+
+9.22.4.1. Executing ABC.
+Running ABC command: "abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+9.22.4.2. Re-integrating ABC results.
+ABC RESULTS:            ANDNOT cells:       22
+ABC RESULTS:               NOR cells:        3
+ABC RESULTS:                OR cells:       23
+ABC RESULTS:             ORNOT cells:        4
+ABC RESULTS:              XNOR cells:        4
+ABC RESULTS:               XOR cells:       26
+ABC RESULTS:        internal signals:       87
+ABC RESULTS:           input signals:       31
+ABC RESULTS:          output signals:        1
+Removing temp directory.
+
+9.22.5. Extracting gate netlist of module `\immediate_generator' to `<abc-temp-dir>/input.blif'..
+Extracted 189 gates and 224 wires to a netlist network with 34 inputs and 31 outputs.
+
+9.22.5.1. Executing ABC.
+Running ABC command: "abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+9.22.5.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:        9
+ABC RESULTS:            ANDNOT cells:       47
+ABC RESULTS:               MUX cells:       42
+ABC RESULTS:              NAND cells:        3
+ABC RESULTS:               NOR cells:        1
+ABC RESULTS:               NOT cells:       12
+ABC RESULTS:                OR cells:       73
+ABC RESULTS:             ORNOT cells:        2
+ABC RESULTS:        internal signals:      159
+ABC RESULTS:           input signals:       34
+ABC RESULTS:          output signals:       31
+Removing temp directory.
+
+9.22.6. Extracting gate netlist of module `\register_file' to `<abc-temp-dir>/input.blif'..
+Extracted 2187 gates and 3229 wires to a netlist network with 1041 inputs and 128 outputs.
+
+9.22.6.1. Executing ABC.
+Running ABC command: "abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+9.22.6.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:        2
+ABC RESULTS:            ANDNOT cells:      100
+ABC RESULTS:               MUX cells:     1984
+ABC RESULTS:              NAND cells:        2
+ABC RESULTS:               NOT cells:        9
+ABC RESULTS:                OR cells:       86
+ABC RESULTS:             ORNOT cells:        4
+ABC RESULTS:        internal signals:     2060
+ABC RESULTS:           input signals:     1041
+ABC RESULTS:          output signals:      128
+Removing temp directory.
+
+9.22.7. Extracting gate netlist of module `\riscv_cpu' to `<abc-temp-dir>/input.blif'..
+Replacing 2 occurrences of constant undef bits with constant zero bits
+Extracted 931 gates and 1202 wires to a netlist network with 269 inputs and 162 outputs.
+
+9.22.7.1. Executing ABC.
+Running ABC command: "abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+9.22.7.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:       32
+ABC RESULTS:            ANDNOT cells:      151
+ABC RESULTS:               MUX cells:      221
+ABC RESULTS:              NAND cells:       30
+ABC RESULTS:               NOR cells:      107
+ABC RESULTS:               NOT cells:       37
+ABC RESULTS:                OR cells:      127
+ABC RESULTS:             ORNOT cells:       19
+ABC RESULTS:              XNOR cells:       58
+ABC RESULTS:               XOR cells:      125
+ABC RESULTS:        internal signals:      771
+ABC RESULTS:           input signals:      269
+ABC RESULTS:          output signals:      162
+Removing temp directory.
+
+9.23. Executing OPT pass (performing simple optimizations).
+
+9.23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+<suppressed ~113 debug messages>
+Optimizing module branch_control.
+Optimizing module control_unit.
+Optimizing module hazard_detection.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+<suppressed ~960 debug messages>
+Optimizing module riscv_cpu.
+<suppressed ~59 debug messages>
+
+9.23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+<suppressed ~3 debug messages>
+Finding identical cells in module `\branch_control'.
+Finding identical cells in module `\control_unit'.
+<suppressed ~6 debug messages>
+Finding identical cells in module `\hazard_detection'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\riscv_cpu'.
+<suppressed ~36 debug messages>
+Removed a total of 15 cells.
+
+9.23.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+9.23.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \branch_control..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \hazard_detection..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \riscv_cpu..
+Removed 10 unused cells and 2894 unused wires.
+<suppressed ~24 debug messages>
+
+9.23.5. Finished fast OPT passes.
+
+9.24. Executing HIERARCHY pass (managing design hierarchy).
+Attribute `top' found on module `riscv_cpu'. Setting top module to riscv_cpu.
+
+9.24.1. Analyzing design hierarchy..
+Top module:  \riscv_cpu
+Used module:     \alu
+Used module:     \branch_control
+Used module:     \control_unit
+Used module:     \hazard_detection
+Used module:     \immediate_generator
+Used module:     \register_file
+
+9.24.2. Analyzing design hierarchy..
+Top module:  \riscv_cpu
+Used module:     \alu
+Used module:     \branch_control
+Used module:     \control_unit
+Used module:     \hazard_detection
+Used module:     \immediate_generator
+Used module:     \register_file
+Removed 0 unused modules.
+
+9.25. Printing statistics.
+
+=== alu ===
+
+   Number of wires:               1575
+   Number of wire bits:           1681
+   Number of public wires:           9
+   Number of public wire bits:     115
+   Number of ports:                  7
+   Number of port bits:            109
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1599
+     $_ANDNOT_                     613
+     $_AND_                         52
+     $_MUX_                        290
+     $_NAND_                        48
+     $_NOR_                         32
+     $_NOT_                         91
+     $_ORNOT_                       73
+     $_OR_                         305
+     $_XNOR_                        32
+     $_XOR_                         63
+
+=== branch_control ===
+
+   Number of wires:                 32
+   Number of wire bits:             65
+   Number of public wires:           6
+   Number of public wire bits:      39
+   Number of ports:                  5
+   Number of port bits:             38
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 27
+     $_ANDNOT_                       6
+     $_MUX_                          3
+     $_NAND_                         4
+     $_NOR_                          1
+     $_NOT_                          1
+     $_ORNOT_                        3
+     $_OR_                           9
+
+=== control_unit ===
+
+   Number of wires:                 66
+   Number of wire bits:             83
+   Number of public wires:          15
+   Number of public wire bits:      32
+   Number of ports:                 14
+   Number of port bits:             31
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 64
+     $_ANDNOT_                      19
+     $_AND_                          2
+     $_NAND_                         3
+     $_NOR_                         11
+     $_ORNOT_                        7
+     $_OR_                          22
+
+=== hazard_detection ===
+
+   Number of wires:                 94
+   Number of wire bits:            114
+   Number of public wires:          13
+   Number of public wire bits:      33
+   Number of ports:                 13
+   Number of port bits:             33
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 82
+     $_ANDNOT_                      22
+     $_NOR_                          3
+     $_ORNOT_                        4
+     $_OR_                          23
+     $_XNOR_                         4
+     $_XOR_                         26
+
+=== immediate_generator ===
+
+   Number of wires:                162
+   Number of wire bits:            225
+   Number of public wires:           4
+   Number of public wire bits:      67
+   Number of ports:                  3
+   Number of port bits:             66
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                189
+     $_ANDNOT_                      47
+     $_AND_                          9
+     $_MUX_                         42
+     $_NAND_                         3
+     $_NOR_                          1
+     $_NOT_                         12
+     $_ORNOT_                        2
+     $_OR_                          73
+
+=== register_file ===
+
+   Number of wires:               2159
+   Number of wire bits:           3287
+   Number of public wires:          42
+   Number of public wire bits:    1170
+   Number of ports:                  9
+   Number of port bits:            114
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               3205
+     $_ANDNOT_                     100
+     $_AND_                          2
+     $_MUX_                       1984
+     $_NAND_                         2
+     $_NOT_                          3
+     $_ORNOT_                        4
+     $_OR_                          86
+     $_SDFFCE_PN0P_               1024
+
+=== riscv_cpu ===
+
+   Number of wires:                811
+   Number of wire bits:           1759
+   Number of public wires:          78
+   Number of public wire bits:    1026
+   Number of ports:                 10
+   Number of port bits:            168
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1362
+     $_ANDNOT_                     151
+     $_AND_                         32
+     $_MUX_                        221
+     $_NAND_                        30
+     $_NOR_                        107
+     $_NOT_                         35
+     $_ORNOT_                       19
+     $_OR_                         115
+     $_SDFFE_PP0N_                  91
+     $_SDFFE_PP0P_                   2
+     $_SDFFE_PP1N_                   3
+     $_SDFF_PP0_                   367
+     $_XNOR_                        58
+     $_XOR_                        125
+     alu                             1
+     branch_control                  1
+     control_unit                    1
+     hazard_detection                1
+     immediate_generator             1
+     register_file                   1
+
+=== design hierarchy ===
+
+   riscv_cpu                         1
+     alu                             1
+     branch_control                  1
+     control_unit                    1
+     hazard_detection                1
+     immediate_generator             1
+     register_file                   1
+
+   Number of wires:               4899
+   Number of wire bits:           7214
+   Number of public wires:         167
+   Number of public wire bits:    2482
+   Number of ports:                 61
+   Number of port bits:            559
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               6522
+     $_ANDNOT_                     958
+     $_AND_                         97
+     $_MUX_                       2540
+     $_NAND_                        90
+     $_NOR_                        155
+     $_NOT_                        142
+     $_ORNOT_                      112
+     $_OR_                         633
+     $_SDFFCE_PN0P_               1024
+     $_SDFFE_PP0N_                  91
+     $_SDFFE_PP0P_                   2
+     $_SDFFE_PP1N_                   3
+     $_SDFF_PP0_                   367
+     $_XNOR_                        94
+     $_XOR_                        214
+
+9.26. Executing CHECK pass (checking for obvious problems).
+Checking module alu...
+Checking module branch_control...
+Checking module control_unit...
+Checking module hazard_detection...
+Checking module immediate_generator...
+Checking module register_file...
+Checking module riscv_cpu...
+Found and reported 0 problems.
+
+10. Executing Verilog backend.
+
+10.1. Executing BMUXMAP pass.
+
+10.2. Executing DEMUXMAP pass.
+Dumping module `\alu'.
+Dumping module `\branch_control'.
+Dumping module `\control_unit'.
+Dumping module `\hazard_detection'.
+Dumping module `\immediate_generator'.
+Dumping module `\register_file'.
+Dumping module `\riscv_cpu'.
+
+11. Printing statistics.
+
+=== alu ===
+
+   Number of wires:               1575
+   Number of wire bits:           1681
+   Number of public wires:           9
+   Number of public wire bits:     115
+   Number of ports:                  7
+   Number of port bits:            109
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1599
+     $_ANDNOT_                     613
+     $_AND_                         52
+     $_MUX_                        290
+     $_NAND_                        48
+     $_NOR_                         32
+     $_NOT_                         91
+     $_ORNOT_                       73
+     $_OR_                         305
+     $_XNOR_                        32
+     $_XOR_                         63
+
+=== branch_control ===
+
+   Number of wires:                 32
+   Number of wire bits:             65
+   Number of public wires:           6
+   Number of public wire bits:      39
+   Number of ports:                  5
+   Number of port bits:             38
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 27
+     $_ANDNOT_                       6
+     $_MUX_                          3
+     $_NAND_                         4
+     $_NOR_                          1
+     $_NOT_                          1
+     $_ORNOT_                        3
+     $_OR_                           9
+
+=== control_unit ===
+
+   Number of wires:                 66
+   Number of wire bits:             83
+   Number of public wires:          15
+   Number of public wire bits:      32
+   Number of ports:                 14
+   Number of port bits:             31
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 64
+     $_ANDNOT_                      19
+     $_AND_                          2
+     $_NAND_                         3
+     $_NOR_                         11
+     $_ORNOT_                        7
+     $_OR_                          22
+
+=== hazard_detection ===
+
+   Number of wires:                 94
+   Number of wire bits:            114
+   Number of public wires:          13
+   Number of public wire bits:      33
+   Number of ports:                 13
+   Number of port bits:             33
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 82
+     $_ANDNOT_                      22
+     $_NOR_                          3
+     $_ORNOT_                        4
+     $_OR_                          23
+     $_XNOR_                         4
+     $_XOR_                         26
+
+=== immediate_generator ===
+
+   Number of wires:                162
+   Number of wire bits:            225
+   Number of public wires:           4
+   Number of public wire bits:      67
+   Number of ports:                  3
+   Number of port bits:             66
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                189
+     $_ANDNOT_                      47
+     $_AND_                          9
+     $_MUX_                         42
+     $_NAND_                         3
+     $_NOR_                          1
+     $_NOT_                         12
+     $_ORNOT_                        2
+     $_OR_                          73
+
+=== register_file ===
+
+   Number of wires:               2159
+   Number of wire bits:           3287
+   Number of public wires:          42
+   Number of public wire bits:    1170
+   Number of ports:                  9
+   Number of port bits:            114
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               3205
+     $_ANDNOT_                     100
+     $_AND_                          2
+     $_MUX_                       1984
+     $_NAND_                         2
+     $_NOT_                          3
+     $_ORNOT_                        4
+     $_OR_                          86
+     $_SDFFCE_PN0P_               1024
+
+=== riscv_cpu ===
+
+   Number of wires:                811
+   Number of wire bits:           1759
+   Number of public wires:          78
+   Number of public wire bits:    1026
+   Number of ports:                 10
+   Number of port bits:            168
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1362
+     $_ANDNOT_                     151
+     $_AND_                         32
+     $_MUX_                        221
+     $_NAND_                        30
+     $_NOR_                        107
+     $_NOT_                         35
+     $_ORNOT_                       19
+     $_OR_                         115
+     $_SDFFE_PP0N_                  91
+     $_SDFFE_PP0P_                   2
+     $_SDFFE_PP1N_                   3
+     $_SDFF_PP0_                   367
+     $_XNOR_                        58
+     $_XOR_                        125
+     alu                             1
+     branch_control                  1
+     control_unit                    1
+     hazard_detection                1
+     immediate_generator             1
+     register_file                   1
+
+=== design hierarchy ===
+
+   riscv_cpu                         1
+     alu                             1
+     branch_control                  1
+     control_unit                    1
+     hazard_detection                1
+     immediate_generator             1
+     register_file                   1
+
+   Number of wires:               4899
+   Number of wire bits:           7214
+   Number of public wires:         167
+   Number of public wire bits:    2482
+   Number of ports:                 61
+   Number of port bits:            559
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               6522
+     $_ANDNOT_                     958
+     $_AND_                         97
+     $_MUX_                       2540
+     $_NAND_                        90
+     $_NOR_                        155
+     $_NOT_                        142
+     $_ORNOT_                      112
+     $_OR_                         633
+     $_SDFFCE_PN0P_               1024
+     $_SDFFE_PP0N_                  91
+     $_SDFFE_PP0P_                   2
+     $_SDFFE_PP1N_                   3
+     $_SDFF_PP0_                   367
+     $_XNOR_                        94
+     $_XOR_                        214
+
+End of script. Logfile hash: 1d6bf968b3, CPU: user 2.11s system 0.02s, MEM: 53.27 MB peak
+Yosys 0.54 (git sha1 db72ec3bd, g++ 15.2.1 -march=x86-64 -mtune=generic -O2 -fno-plt -fexceptions -fstack-clash-protection -fcf-protection -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/yosys/src=/usr/src/debug/yosys -fPIC -O3)
+Time spent: 23% 1x abc (0 sec), 17% 39x opt_expr (0 sec), ...

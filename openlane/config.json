@@ -1,0 +1,24 @@
+{
+    "DESIGN_NAME": "riscv_cpu",
+    "PDK": "sky130A",
+    "STD_CELL_LIBRARY": "sky130_fd_sc_hd",
+    "VERILOG_FILES": [
+        "../rtl/riscv_cpu.sv",
+        "../rtl/alu.sv",
+        "../rtl/control_unit.sv",
+        "../rtl/register_file.sv",
+        "../rtl/hazard_detection.sv",
+        "../rtl/immediate_generator.sv",
+        "../rtl/branch_control.sv",
+        "../rtl/instruction_memory.sv",
+        "../rtl/data_memory.sv",
+        "../rtl/pc.sv"
+    ],
+    "CLOCK_PORT": "clk",
+    "CLOCK_NET": "clk",
+    "CLOCK_PERIOD": 20.0,
+    "FP_SIZING": "absolute",
+    "DIE_AREA": "0 0 1500 1500",
+    "PL_TARGET_DENSITY": 0.30,
+    "SYNTH_STRATEGY": "DELAY 0"
+}
