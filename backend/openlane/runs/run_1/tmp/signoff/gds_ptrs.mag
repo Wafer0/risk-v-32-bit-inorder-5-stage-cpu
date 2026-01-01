@@ -1,6 +1,0 @@
-<< properties >>
-string FIXED_BBOX 0 0 200000 200000
-string GDS_END 39348802
-string GDS_FILE /project/openlane/runs/run_1/results/signoff/riscv_cpu.magic.gds
-string GDS_START 1609616
-<< end >>
